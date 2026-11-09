@@ -1,0 +1,383 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+  <title>Stories — Social Media Web App</title>
+  <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+  <!-- App Container -->
+  <div class="app-container">
+    
+    <!-- Top Navigation Header -->
+    <header class="app-header">
+      <div class="header-left">
+        <div class="app-logo">
+          <svg class="logo-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+            <rect x="2" y="2" width="20" height="20" rx="5" ry="5"></rect>
+            <path d="M16 11.37A4 4 0 1 1 12.63 8 4 4 0 0 1 16 11.37z"></path>
+            <line x1="17.5" y1="6.5" x2="17.51" y2="6.5"></line>
+          </svg>
+          <span class="logo-text">Stories</span>
+        </div>
+      </div>
+
+      <div class="header-center">
+        <div class="search-bar">
+          <svg class="search-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+            <circle cx="11" cy="11" r="8"></circle>
+            <line x1="21" y1="21" x2="16.65" y2="16.65"></line>
+          </svg>
+          <input type="text" placeholder="Search accounts..." readonly />
+        </div>
+      </div>
+
+      <div class="header-right">
+        <!-- Quick Action / Demo Controls dropdown toggle -->
+        <button id="demoControlsBtn" class="icon-button" title="Story Tools & Settings" aria-label="Story Tools">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+            <circle cx="12" cy="12" r="3"></circle>
+            <path d="M19.4 15a1.65 1.65 0 0 0 .33 1.82l.06.06a2 2 0 0 1 0 2.83 2 2 0 0 1-2.83 0l-.06-.06a1.65 1.65 0 0 0-1.82-.33 1.65 1.65 0 0 0-1 1.51V21a2 2 0 0 1-2 2 2 2 0 0 1-2-2v-.09A1.65 1.65 0 0 0 9 19.4a1.65 1.65 0 0 0-1.82.33l-.06.06a2 2 0 0 1-2.83 0 2 2 0 0 1 0-2.83l.06-.06a1.65 1.65 0 0 0 .33-1.82 1.65 1.65 0 0 0-1.51-1H3a2 2 0 0 1-2-2 2 2 0 0 1 2-2h.09A1.65 1.65 0 0 0 4.6 9a1.65 1.65 0 0 0-.33-1.82l-.06-.06a2 2 0 0 1 0-2.83 2 2 0 0 1 2.83 0l.06.06a1.65 1.65 0 0 0 1.82.33H9a1.65 1.65 0 0 0 1-1.51V3a2 2 0 0 1 2-2 2 2 0 0 1 2 2v.09a1.65 1.65 0 0 0 1 1.51 1.65 1.65 0 0 0 1.82-.33l.06-.06a2 2 0 0 1 2.83 0 2 2 0 0 1 0 2.83l-.06.06a1.65 1.65 0 0 0-.33 1.82V9a1.65 1.65 0 0 0 1.51 1H21a2 2 0 0 1 2 2 2 2 0 0 1-2 2h-.09a1.65 1.65 0 0 0-1.51 1z"></path>
+          </svg>
+        </button>
+
+        <button class="icon-button notification-btn" title="Activity" aria-label="Activity">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+            <path d="M20.84 4.61a5.5 5.5 0 0 0-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 0 0-7.78 7.78l1.06 1.06L12 21.23l7.78-7.78 1.06-1.06a5.5 5.5 0 0 0 0-7.78z"></path>
+          </svg>
+        </button>
+      </div>
+    </header>
+
+    <!-- Demo Controls Panel (Quick Testing for Evaluators) -->
+    <div id="demoControlsPanel" class="demo-panel hidden" role="region" aria-label="Testing Controls">
+      <div class="demo-panel-header">
+        <h4>Story Testing & Storage Controls</h4>
+        <button id="closeDemoPanel" class="close-panel-btn" aria-label="Close settings">&times;</button>
+      </div>
+      <div class="demo-panel-body">
+        <p class="demo-description">Quick utilities to test 24h expiration, quota handling, and demo stories.</p>
+        <div class="demo-buttons-grid">
+          <button id="loadSampleStoriesBtn" class="btn btn-secondary">
+            <svg viewBox="0 0 24 24" width="16" height="16" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 2v20M2 12h20"/></svg>
+            Load Sample Stories
+          </button>
+          <button id="expireOldestStoryBtn" class="btn btn-secondary" title="Set oldest story expiration to past">
+            <svg viewBox="0 0 24 24" width="16" height="16" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"/><polyline points="12 6 12 12 14 14"/></svg>
+            Expire Oldest Story (Test 24h)
+          </button>
+          <button id="markAllUnviewedBtn" class="btn btn-secondary">
+            <svg viewBox="0 0 24 24" width="16" height="16" fill="none" stroke="currentColor" stroke-width="2"><path d="M1 12s4-8 11-8 11 8 11 8-4 8-11 8-11-8-11-8z"/><circle cx="12" cy="12" r="3"/></svg>
+            Reset Viewed Status
+          </button>
+          <button id="clearAllStoriesBtn" class="btn btn-danger">
+            <svg viewBox="0 0 24 24" width="16" height="16" fill="none" stroke="currentColor" stroke-width="2"><polyline points="3 6 5 6 21 6"/><path d="M19 6v14a2 2 0 0 1-2 2H7a2 2 0 0 1-2-2V6m3 0V4a2 2 0 0 1 2-2h4a2 2 0 0 1 2 2v2"/></svg>
+            Clear All Stories
+          </button>
+        </div>
+        <div class="storage-info">
+          <div class="storage-info-labels">
+            <span>Storage Usage:</span>
+            <span id="storageUsageText">0 KB / ~5 MB</span>
+          </div>
+          <div class="storage-bar-track">
+            <div id="storageBarFill" class="storage-bar-fill" style="width: 0%;"></div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Main Content Area -->
+    <main class="main-content">
+      
+      <!-- Horizontal Stories Section -->
+      <section class="stories-section" aria-label="Stories">
+        <div class="stories-scroll-wrapper">
+          <div id="storiesContainer" class="stories-container">
+            
+            <!-- Add Story Button Item (Always First & Visually Distinct) -->
+            <div class="story-item add-story-item" id="addStoryBtn" role="button" tabindex="0" aria-label="Add New Story">
+              <div class="story-avatar-wrapper add-story-wrapper">
+                <div class="story-avatar add-story-avatar">
+                  <img src="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='%239ca3af'%3E%3Cpath d='M12 12c2.21 0 4-1.79 4-4s-1.79-4-4-4-4 1.79-4 4 1.79 4 4 4zm0 2c-2.67 0-8 1.34-8 4v2h16v-2c0-2.66-5.33-4-8-4z'/%3E%3C/svg%3E" alt="Your Profile" class="avatar-img" />
+                </div>
+                <div class="add-story-badge" title="Add Story">
+                  <svg class="plus-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round">
+                    <line x1="12" y1="5" x2="12" y2="19"></line>
+                    <line x1="5" y1="12" x2="19" y2="12"></line>
+                  </svg>
+                </div>
+              </div>
+              <span class="story-username">Your Story</span>
+            </div>
+
+            <!-- Dynamic Story Items will be rendered here -->
+            <div id="storyItemsList" class="story-items-list"></div>
+
+          </div>
+        </div>
+
+        <!-- Hidden Native File Input for Story Upload -->
+        <input 
+          type="file" 
+          id="storyFileInput" 
+          accept="image/jpeg,image/jpg,image/png,image/webp" 
+          class="hidden-file-input" 
+          aria-hidden="true" 
+        />
+      </section>
+
+      <!-- Feed Section (Mockup social media feed for realistic context) -->
+      <section class="feed-section">
+        
+        <!-- Story Status Banner / Empty State when zero stories exist -->
+        <div id="emptyStoryBanner" class="empty-story-banner hidden">
+          <div class="empty-icon-wrapper">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5">
+              <circle cx="12" cy="12" r="10"></circle>
+              <polyline points="12 6 12 12 16 14"></polyline>
+            </svg>
+          </div>
+          <h3>No active stories right now</h3>
+          <p>Stories disappear automatically after 24 hours. Click the <strong>+</strong> button above to upload a new photo story!</p>
+          <button id="bannerUploadBtn" class="btn btn-primary">
+            <svg viewBox="0 0 24 24" width="18" height="18" fill="none" stroke="currentColor" stroke-width="2.5">
+              <line x1="12" y1="5" x2="12" y2="19"></line>
+              <line x1="5" y1="12" x2="19" y2="12"></line>
+            </svg>
+            Share a Story
+          </button>
+        </div>
+
+        <!-- Feed Cards -->
+        <article class="feed-card">
+          <header class="feed-card-header">
+            <div class="feed-author">
+              <div class="feed-author-avatar gradient-border">
+                <img src="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'%3E%3Ccircle cx='50' cy='50' r='50' fill='%236366f1'/%3E%3Ctext x='50' y='57' font-size='32' text-anchor='middle' fill='white' font-family='sans-serif' font-weight='bold'%3EAG%3C/text%3E%3C/svg%3E" alt="Avatar" />
+              </div>
+              <div class="feed-author-meta">
+                <span class="feed-author-name">antigravity.daily</span>
+                <span class="feed-author-location">Tokyo, Japan</span>
+              </div>
+            </div>
+            <button class="icon-button" aria-label="More options">
+              <svg viewBox="0 0 24 24" width="20" height="20" fill="currentColor">
+                <circle cx="12" cy="12" r="2"></circle>
+                <circle cx="19" cy="12" r="2"></circle>
+                <circle cx="5" cy="12" r="2"></circle>
+              </svg>
+            </button>
+          </header>
+          
+          <div class="feed-image-container">
+            <img 
+              src="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 800 600'%3E%3Cdefs%3E%3ClinearGradient id='sky' x1='0' y1='0' x2='1' y2='1'%3E%3Cstop offset='0%25' stop-color='%231a1a2e'/%3E%3Cstop offset='50%25' stop-color='%2316213e'/%3E%3Cstop offset='100%25' stop-color='%230f3460'/%3E%3C/linearGradient%3E%3CradialGradient id='sun' cx='50%25' cy='60%25' r='50%25'%3E%3Cstop offset='0%25' stop-color='%23e94560'/%3E%3Cstop offset='100%25' stop-color='%231a1a2e' stop-opacity='0'/%3E%3C/radialGradient%3E%3C/defs%3E%3Crect width='800' height='600' fill='url(%23sky)'/%3E%3Ccircle cx='400' cy='360' r='180' fill='url(%23sun)'/%3E%3Cpath d='M0 600 L250 420 L450 540 L650 390 L800 520 L800 600 Z' fill='%230e1526'/%3E%3Cpath d='M100 600 L350 470 L550 560 L800 450 L800 600 Z' fill='%23070b14'/%3E%3Ctext x='400' y='260' font-family='system-ui, sans-serif' font-size='32' fill='%23ffffff' font-weight='600' text-anchor='middle'%3EMidnight Cyber Skyline%3C/text%3E%3Ctext x='400' y='300' font-family='system-ui, sans-serif' font-size='16' fill='%2394a3b8' text-anchor='middle'%3ETap stories above to experience full-screen viewer%3C/text%3E%3C/svg%3E" 
+              alt="Feed post" 
+              class="feed-post-img" 
+            />
+          </div>
+
+          <div class="feed-actions">
+            <div class="feed-actions-left">
+              <button class="feed-action-btn like-btn" aria-label="Like post">
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                  <path d="M20.84 4.61a5.5 5.5 0 0 0-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 0 0-7.78 7.78l1.06 1.06L12 21.23l7.78-7.78 1.06-1.06a5.5 5.5 0 0 0 0-7.78z"></path>
+                </svg>
+              </button>
+              <button class="feed-action-btn" aria-label="Comment">
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                  <path d="M21 11.5a8.38 8.38 0 0 1-.9 3.8 8.5 8.5 0 0 1-7.6 4.7 8.38 8.38 0 0 1-3.8-.9L3 21l1.9-5.7a8.38 8.38 0 0 1-.9-3.8 8.5 8.5 0 0 1 4.7-7.6 8.38 8.38 0 0 1 3.8-.9h.5a8.48 8.48 0 0 1 8 8v.5z"></path>
+                </svg>
+              </button>
+              <button class="feed-action-btn" aria-label="Share">
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                  <line x1="22" y1="2" x2="11" y2="13"></line>
+                  <polygon points="22 2 15 22 11 13 2 9 22 2"></polygon>
+                </svg>
+              </button>
+            </div>
+            <button class="feed-action-btn bookmark-btn" aria-label="Bookmark">
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                <path d="M19 21l-7-5-7 5V5a2 2 0 0 1 2-2h10a2 2 0 0 1 2 2z"></path>
+              </svg>
+            </button>
+          </div>
+
+          <div class="feed-caption">
+            <span class="feed-caption-author">antigravity.daily</span>
+            <span>Welcome to the Stories web app! Click the story circles at the top to watch stories, or press + to upload your own. Stories expire automatically after 24 hours.</span>
+          </div>
+          <div class="feed-timestamp">2 HOURS AGO</div>
+        </article>
+      </section>
+
+    </main>
+
+    <!-- Mobile Bottom Navigation Bar -->
+    <nav class="bottom-nav">
+      <button class="nav-btn active" aria-label="Home">
+        <svg viewBox="0 0 24 24" fill="currentColor">
+          <path d="M10 20v-6h4v6h5v-8h3L12 3 2 12h3v8z"/>
+        </svg>
+      </button>
+      <button class="nav-btn" aria-label="Search">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+          <circle cx="11" cy="11" r="8"></circle>
+          <line x1="21" y1="21" x2="16.65" y2="16.65"></line>
+        </svg>
+      </button>
+      <button id="mobileAddStoryBtn" class="nav-btn add-btn" aria-label="Add Story">
+        <div class="nav-add-icon">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5">
+            <line x1="12" y1="5" x2="12" y2="19"></line>
+            <line x1="5" y1="12" x2="19" y2="12"></line>
+          </svg>
+        </div>
+      </button>
+      <button class="nav-btn" aria-label="Reels">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+          <rect x="2" y="2" width="20" height="20" rx="2.18" ry="2.18"></rect>
+          <line x1="7" y1="2" x2="7" y2="22"></line>
+          <line x1="17" y1="2" x2="17" y2="22"></line>
+          <line x1="2" y1="12" x2="22" y2="12"></line>
+          <line x1="2" y1="7" x2="7" y2="7"></line>
+          <line x1="2" y1="17" x2="7" y2="17"></line>
+          <line x1="17" y1="17" x2="22" y2="17"></line>
+          <line x1="17" y1="7" x2="22" y2="7"></line>
+        </svg>
+      </button>
+      <button class="nav-btn" aria-label="Profile">
+        <div class="nav-avatar">
+          <img src="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='%2364748b'%3E%3Cpath d='M12 12c2.21 0 4-1.79 4-4s-1.79-4-4-4-4 1.79-4 4 1.79 4 4 4zm0 2c-2.67 0-8 1.34-8 4v2h16v-2c0-2.66-5.33-4-8-4z'/%3E%3C/svg%3E" alt="Profile" />
+        </div>
+      </button>
+    </nav>
+  </div>
+
+  <!-- Full-Screen Story Viewer Overlay -->
+  <div id="storyViewer" class="story-viewer hidden" role="dialog" aria-modal="true" aria-label="Story Viewer">
+    
+    <!-- Background Backdrop / Blur -->
+    <div class="viewer-backdrop" id="viewerBackdrop"></div>
+
+    <!-- Viewer Central Container -->
+    <div class="viewer-content" id="viewerContent">
+      
+      <!-- Top Progress Bars Container (Segmented per active story) -->
+      <div id="progressBarContainer" class="viewer-progress-container" aria-label="Story Progress">
+        <!-- Progress segments will be injected dynamically -->
+      </div>
+
+      <!-- Viewer Header: User Info, Time, Pause state, Close Button -->
+      <header class="viewer-header">
+        <div class="viewer-user-info">
+          <div class="viewer-user-avatar">
+            <img id="viewerUserAvatar" src="" alt="Author" />
+          </div>
+          <div class="viewer-user-meta">
+            <span id="viewerUserName" class="viewer-user-name">Username</span>
+            <span class="viewer-separator">•</span>
+            <span id="viewerTimestamp" class="viewer-timestamp">Just now</span>
+          </div>
+        </div>
+
+        <div class="viewer-controls">
+          <!-- Play / Pause Indicator -->
+          <div id="viewerPauseIndicator" class="viewer-pause-pill hidden">
+            <svg viewBox="0 0 24 24" width="14" height="14" fill="currentColor">
+              <rect x="6" y="4" width="4" height="16"></rect>
+              <rect x="14" y="4" width="4" height="16"></rect>
+            </svg>
+            <span>Paused</span>
+          </div>
+
+          <!-- Delete Story Button -->
+          <button id="viewerDeleteBtn" class="viewer-icon-btn" title="Delete this story" aria-label="Delete Story">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+              <polyline points="3 6 5 6 21 6"></polyline>
+              <path d="M19 6v14a2 2 0 0 1-2 2H7a2 2 0 0 1-2-2V6m3 0V4a2 2 0 0 1 2-2h4a2 2 0 0 1 2 2v2"></path>
+            </svg>
+          </button>
+
+          <!-- Close (X) Button -->
+          <button id="viewerCloseBtn" class="viewer-icon-btn close-btn" title="Close (Esc)" aria-label="Close Story Viewer">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round">
+              <line x1="18" y1="6" x2="6" y2="18"></line>
+              <line x1="6" y1="6" x2="18" y2="18"></line>
+            </svg>
+          </button>
+        </div>
+      </header>
+
+      <!-- Main Story Image Display -->
+      <div class="viewer-media-wrapper" id="viewerMediaWrapper">
+        <img id="viewerImage" class="viewer-image" src="" alt="Story Image" />
+        
+        <!-- Loading spinner for image transitions -->
+        <div id="viewerLoadingSpinner" class="viewer-spinner hidden">
+          <div class="spinner-ring"></div>
+        </div>
+      </div>
+
+      <!-- Left & Right Tap Zones for Navigation -->
+      <div class="viewer-nav-zones">
+        <div id="navZoneLeft" class="nav-zone nav-zone-left" title="Previous Story (Click or swipe right)">
+          <div class="nav-hint-arrow left-arrow">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5">
+              <polyline points="15 18 9 12 15 6"></polyline>
+            </svg>
+          </div>
+        </div>
+        <div id="navZoneRight" class="nav-zone nav-zone-right" title="Next Story (Click or swipe left)">
+          <div class="nav-hint-arrow right-arrow">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5">
+              <polyline points="9 18 15 12 9 6"></polyline>
+            </svg>
+          </div>
+        </div>
+      </div>
+
+      <!-- Bottom Hint / Quick Reaction Bar -->
+      <footer class="viewer-footer">
+        <div class="viewer-reply-box">
+          <input type="text" placeholder="Send reply..." readonly />
+          <button class="reply-heart-btn" aria-label="Send love">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+              <path d="M20.84 4.61a5.5 5.5 0 0 0-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 0 0-7.78 7.78l1.06 1.06L12 21.23l7.78-7.78 1.06-1.06a5.5 5.5 0 0 0 0-7.78z"></path>
+            </svg>
+          </button>
+        </div>
+        <div class="viewer-swipe-hint">
+          <span>Swipe or tap left/right to navigate • Press & hold to pause</span>
+        </div>
+      </footer>
+
+    </div>
+
+    <!-- Desktop Navigation Side Arrows -->
+    <button id="desktopPrevBtn" class="desktop-nav-arrow desktop-prev-arrow" title="Previous Story" aria-label="Previous Story">
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5">
+        <polyline points="15 18 9 12 15 6"></polyline>
+      </svg>
+    </button>
+    <button id="desktopNextBtn" class="desktop-nav-arrow desktop-next-arrow" title="Next Story" aria-label="Next Story">
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5">
+        <polyline points="9 18 15 12 9 6"></polyline>
+      </svg>
+    </button>
+
+  </div>
+
+  <!-- Toast Notification Container -->
+  <div id="toastContainer" class="toast-container" aria-live="polite"></div>
+
+  <!-- Image Processing Canvas (Off-screen) -->
+  <canvas id="processingCanvas" class="hidden-canvas"></canvas>
+
+  <!-- JavaScript Application Entry Point -->
+  <script src="app.js"></script>
+</body>
+</html>
+
